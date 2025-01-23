@@ -25,4 +25,4 @@ ggplot(mydata, aes(x, y))+
 
 # a photo of my cat
 
-![Chuck!](images/PHOTO-2024-05-28-16-51-47.jpg){fig-alt="cat" fig-align="center"}
+![Chuck! He is sleeping](images/PHOTO-2024-05-28-16-51-47.jpg){fig-alt="cat" fig-align="center"}
