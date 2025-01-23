@@ -1,2 +1,2 @@
 # test script
-print("hello!")
+print("hello world!")
