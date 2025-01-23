@@ -1,0 +1,28 @@
+---
+title: "test_quarto"
+author: "Srishti Arya"
+format: html
+editor: visual
+---
+
+# setup
+
+```{r}
+library(ggplot2)
+```
+
+# test plot
+
+```{r}
+library(ggplot2)
+
+mydata<-data.frame(x=1:10, y=1:10)
+
+ggplot(mydata, aes(x, y))+
+  geom_point(colour = "deeppink")+
+  theme_minimal()
+```
+
+# a photo of my cat
+
+![Chuck!](images/PHOTO-2024-05-28-16-51-47.jpg){fig-alt="cat" fig-align="center"}
