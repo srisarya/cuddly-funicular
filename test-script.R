@@ -1,1 +1,2 @@
 # test script
+print("hello!")
