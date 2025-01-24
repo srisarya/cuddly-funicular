@@ -1,0 +1,120 @@
+---
+title: "R course at NHM"
+subtitle: "trees"
+author: "Srishti Arya"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: true
+    df_print: paged
+  pdf_document:
+    toc: true
+---
+
+# setup
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(readr)
+library(stringr)
+library(ape)
+library(ggtree) # installed via bioconductor
+
+knitr::opts_knit$set(root.dir = "/Users/srishti/Desktop/OneDrive - Queen Mary, University of London/SrishtiArya_AllWork/Projects/NHM_R/cuddly-funicular/")
+
+options(scipen = 999)
+```
+
+# loading data example
+the data is stored in LISTS
+always use str() to examine data pre modification to understand data structure
+```{r, fig.width=10, fig.height=50}
+ape::read.tree(file = "input_data_trees/basic.tre")
+
+ape::read.nexus(file = "input_data_trees/frog-tree.nex")
+```
+
+# loading test data
+```{r}
+mytree<-read.tree("input_data_trees/basic.tre")
+
+mytree
+
+str(mytree)
+```
+
+# plotting using base r
+base r plot function goes through a loop
+it finds that this is phylogenetic data so it uses plot.phylo from ape package
+can also input function plot.phylo directly
+```{r}
+plot.phylo(mytree)
+```
+
+# bird data example
+```{r}
+bird.orders<-read.tree("input_data_trees/bird.orders.tre")
+
+plot.phylo(bird.orders, 
+           cex = 0.6,
+           no.margin = TRUE)
+
+plot.phylo(bird.orders, 
+           cex = 0.6,
+           type = "fan", # this is making a circle phylogeny instead of a cladogram
+           no.margin = TRUE)
+
+# the birds have qualifiers
+birdfacts<-read.csv("input_data_trees/bird-facts.csv")
+view(birdfacts)
+
+bird.colours<-c("lightblue3", "salmon", "darkolivegreen3")
+
+plot(bird.orders, 
+     label.offset = 1,
+     cex = 0.9,
+     no.margin = TRUE)
+
+tiplabels(pch = 22,
+          bg = bird.colours[as.factor(birdfacts$coolness)],
+          cex = 1.2,
+          adj = 1)
+```
+# note on base r plotting
+the code for this example only works if your tip labels are in the same order as the data in the data frame
+if not, it will be random
+we can reorder the data to match the phylogeny
+```{r}
+birdfacts <- birdfacts[match(bird.orders$tip.label,     
+birdfacts$orders), ]
+```
+
+# ggtree
+```{r fig.width=7, fig.height=7}
+ggtree(mytree)
+
+ggtree(bird.orders, 
+       color = "blue", 
+       size = 2)+
+  xlim(0, 35)+
+  geom_tiplab(offset = 1,
+              fontface = "italic")+
+  theme_tree2()+
+  geom_nodepoint(colour = "coral", 
+                 shape = "square", 
+                 size = 5,
+                 alpha = 0.8) +
+  geom_tippoint(size = 2, colour = "cyan3")+ 
+  geom_text(aes(label = node), 
+            hjust = -0.3)
+
+ggtree(bird.orders, layout = "fan")+
+  xlim(0, 35)+
+  geom_tiplab(offset = 1,
+              fontface = "italic")+
+  theme_tree()
+
+```
+
+
+
