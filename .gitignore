@@ -6,6 +6,9 @@
 .RData
 .RDataTmp
 
+# analysis data files
+*data*/
+
 # User-specific files
 .Ruserdata
 
